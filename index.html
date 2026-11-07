@@ -1,11 +1,846 @@
-<!doctype html>
-   <html lang="en">
-   <head>
-     <meta charset="utf-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1">
-     <title>Welcome</title>
-   </head>
-   <body>
-     <h1>✨</h1>
-   </body>
-   </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>♥ welcome to the nest ♥</title>
+<!-- Favicon files: keep these three files in the same folder as this page -->
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --plum: #4a1d3f;
+    --rose: #d63384;
+    --pink: #ff9ec4;
+    --blush: #fdf1f6;
+    --lace: #f2a7c9;
+    --lilac: #b48ad8;
+  }
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    font-family: "Times New Roman", Times, serif;
+    font-size: 18px;
+    line-height: 1.5;
+    color: var(--plum);
+    /* Tiled "watermark" background: faint puzzle pieces, a feather and a heart */
+    background-color: var(--blush);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cg fill='none' stroke='%23f3c3d9' stroke-width='2' stroke-linejoin='round'%3E%3Cpath d='M20 20H44a8 8 0 1 1 12 0H80V44a8 8 0 1 1 0 12V80H56a8 8 0 1 0-12 0H20V56a8 8 0 1 0 0-12Z'/%3E%3Cpath transform='translate(84 84) scale(.75) rotate(20 50 50)' d='M20 20H44a8 8 0 1 1 12 0H80V44a8 8 0 1 1 0 12V80H56a8 8 0 1 0-12 0H20V56a8 8 0 1 0 0-12Z'/%3E%3Cpath transform='translate(126 38) rotate(35)' d='M0-24C9-13 9 9 0 22C-9 9-9-13 0-24ZM0-24V32'/%3E%3Cpath transform='translate(40 126) rotate(-15) scale(1.1)' d='M0 10C-14 0-12-12-4-12C-1-12 0-9 0-8C0-9 1-12 4-12C12-12 14 0 0 10Z'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: 160px 160px;
+  }
+
+  a { color: #c2185b; }
+  a:visited { color: #7b3fa0; }
+  a:hover { color: #fff; background: var(--rose); }
+
+  .comic { font-family: "Comic Sans MS", "Comic Sans", "Chalkboard SE", "Comic Neue", cursive; }
+  .script { font-family: "Dancing Script", "Lucida Handwriting", "Apple Chancery", "Brush Script MT", cursive; font-weight: 700; }
+
+  marquee {
+    display: block;
+    background: linear-gradient(90deg, #ffc2dc, #e6ccff, #ffc2dc);
+    color: #8a1f5c;
+    font-family: "Comic Sans MS", "Comic Sans", "Chalkboard SE", "Comic Neue", cursive;
+    font-size: 16px;
+    padding: 6px 0;
+    border-bottom: 3px double #fff;
+  }
+
+  .wrap { max-width: 640px; margin: 0 auto; padding: 24px 16px 40px; }
+
+  header { text-align: center; }
+  .raven { display: block; margin: 0 auto; animation: bob 1.2s steps(2) infinite; }
+  @keyframes bob { 50% { transform: translateY(-3px); } }
+  .raven.hop { animation: hop 0.45s steps(4); }
+  @keyframes hop { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+  .feather { width: 10px; height: 18px; background-size: 100% 100%; image-rendering: pixelated; }
+
+  /* Easter eggs: the raven and the teacup are secretly buttons */
+  .egg {
+    display: block;
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .egg:focus-visible { outline: 2px dashed var(--rose); outline-offset: 4px; }
+  .raven-wrap { position: relative; width: 108px; margin: 0 auto; }
+  .cup-wrap { position: relative; display: inline-flex; }
+
+  /* 8-bit speech bubble */
+  .bubble {
+    position: absolute;
+    z-index: 5;
+    width: max-content;
+    padding: 8px 10px;
+    background: #fff;
+    color: var(--plum);
+    font: 9px/1.7 "Press Start 2P", "Courier New", monospace;
+    text-align: left;
+    box-shadow: 0 -3px 0 var(--plum), 0 3px 0 var(--plum), -3px 0 0 var(--plum), 3px 0 0 var(--plum);
+    transform-origin: bottom left;
+    visibility: hidden;
+    pointer-events: none;
+  }
+  .bubble::after {   /* the little stepped tail */
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 6px;
+    width: 3px;
+    height: 3px;
+    background: var(--plum);
+    box-shadow: 3px 0 #fff, 6px 0 #fff, 9px 0 var(--plum),
+                0 3px var(--plum), 3px 3px #fff, 6px 3px var(--plum),
+                0 6px var(--plum), 3px 6px var(--plum),
+                0 9px var(--plum);
+  }
+  .bubble.show { visibility: visible; animation: pop 0.24s steps(3); }
+  @keyframes pop { from { transform: scale(0.4); } to { transform: scale(1); } }
+  #ravenBubble { left: 96px; bottom: 66px; max-width: min(170px, calc(50vw - 60px)); }
+  #cupBubble { left: -6px; bottom: 34px; max-width: 110px; }
+
+  h1 {
+    font-size: clamp(38px, 9vw, 58px);
+    font-weight: 700;
+    line-height: 1.1;
+    margin: 8px 0 18px;
+    color: var(--rose);
+    text-shadow: 2px 2px 0 #fff, 4px 4px 0 var(--lilac);
+  }
+
+  .divider {
+    text-align: center;
+    color: #e86aa6;
+    letter-spacing: 10px;
+    margin: 20px 0;
+    font-size: 18px;
+  }
+
+  .construction {
+    background: repeating-linear-gradient(-45deg, var(--pink) 0 12px, #fff 12px 24px);
+    padding: 6px;
+    text-align: center;
+    margin-bottom: 22px;
+    border-radius: 4px;
+  }
+  .construction span {
+    display: inline-block;
+    background: #fff;
+    color: #c2185b;
+    padding: 2px 10px;
+    font-family: "Courier New", Courier, monospace;
+    font-weight: bold;
+    font-size: 15px;
+  }
+
+  .box {
+    background: #fff;
+    border: 5px ridge var(--lace);
+    padding: 16px 20px;
+    margin-bottom: 22px;
+    box-shadow: 6px 6px 0 rgba(214, 51, 132, 0.18);
+  }
+  .box h2 {
+    margin: 0 0 10px;
+    font-size: 30px;
+    line-height: 1.2;
+    color: var(--rose);
+    text-align: center;
+  }
+  .box p:last-child { margin-bottom: 0; }
+
+  /* LiveJournal-style mood line */
+  .mood {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: fit-content;
+    max-width: 100%;
+    margin: 0 auto 22px;
+    padding: 6px 14px;
+    background: #fff7fb;
+    border: 1px solid var(--lace);
+    font: 14px Verdana, Geneva, sans-serif;
+  }
+  .mood b { color: var(--rose); }
+
+  .counter { text-align: center; font-size: 16px; margin-bottom: 22px; }
+  .odometer {
+    display: inline-flex;
+    gap: 2px;
+    vertical-align: middle;
+    margin: 0 4px;
+    padding: 3px;
+    background: var(--plum);
+    border: 2px inset var(--lace);
+  }
+  .odometer span {
+    display: inline-block;
+    width: 16px;
+    background: #2b0f24;
+    color: var(--pink);
+    font: bold 16px/22px "Courier New", Courier, monospace;
+    text-align: center;
+  }
+
+  .badges { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 18px; }
+  .badge {
+    width: 88px;
+    height: 31px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font: bold 9px/1.1 Verdana, Geneva, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border: 2px outset #f5d0e2;
+  }
+  .b1 { background: #ffd6e8; color: #c2185b; }
+  .b2 { background: #e9d8ff; color: #6a3fb0; }
+  .b5 { background: var(--rose); color: #fff; }
+
+  footer { text-align: center; font: 13px/1.6 Arial, Helvetica, sans-serif; color: #8a4f7d; }
+
+  /* Meditation board */
+  .board-note { text-align: center; font-size: 14px; color: #8a4f7d; margin: -4px 0 12px; }
+  #board {
+    display: block;
+    width: 100%;
+    height: 240px;
+    background: #fffafc;
+    border: 3px inset var(--lace);
+    touch-action: none;
+    cursor: crosshair;
+  }
+
+  /* The cursor tail and tap bursts */
+  .trail, .burst {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    user-select: none;
+    z-index: 9999;
+    line-height: 1;
+    will-change: transform;
+  }
+  .trail { opacity: 0; transition: opacity 0.35s; }
+
+  @media (max-width: 480px) {
+    .box { padding: 14px 12px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .raven { animation: none; }
+  }
+</style>
+</head>
+<body>
+
+<marquee scrollamount="6">
+  ♥ ✿ Thanks for stopping by! ✿ ♥
+</marquee>
+
+<div class="wrap">
+
+  <header>
+    <!-- Pixel raven with a bow (drawn by the script at the bottom). Tap it! -->
+    <div class="raven-wrap">
+      <button type="button" class="egg" id="ravenBtn" aria-label="Poke the little raven">
+        <svg id="raven" class="raven" viewBox="0 0 18 16" width="108" height="96"
+             shape-rendering="crispEdges" aria-hidden="true"></svg>
+      </button>
+      <span class="bubble" id="ravenBubble" role="status" aria-live="polite"></span>
+    </div>
+    <h1 class="script">Welcome to my little nest!</h1>
+  </header>
+
+  <div class="construction"><span>✿ UNDER CONSTRUCTION? ✿</span></div>
+
+  <!-- ✏️ EDIT: change "cozy" to any mood you like -->
+  <p class="mood">
+    <b>aspirational mood:</b>
+    <span class="cup-wrap">
+      <button type="button" class="egg" id="cupBtn" aria-label="Sip the tea">
+        <svg id="cup" viewBox="0 0 11 8" width="33" height="24" shape-rendering="crispEdges" aria-hidden="true"></svg>
+      </button>
+      <span class="bubble" id="cupBubble" role="status" aria-live="polite"></span>
+    </span>
+    cozy
+  </p>
+
+  <div class="divider" aria-hidden="true">♥ ✿ ♥ ✿ ♥</div>
+
+  <div class="box">
+    <h2 class="script">Meditation Board</h2>
+    <p class="board-note comic">draw something calm... it fades away ✿</p>
+    <canvas id="board" role="img" aria-label="Drawing board. Draw with your mouse or finger; your drawing slowly fades away."></canvas>
+  </div>
+
+  <p class="counter comic">You have visited this page
+    <span class="odometer" id="counter" aria-label="visit count"></span>
+    times!</p>
+
+  <div class="badges" aria-hidden="true">
+    <div class="badge b1">Made<br>with ♥</div>
+    <div class="badge b2">Best viewed<br>at 800×600</div>
+    <div class="badge b5">Y2K<br>ready!</div>
+  </div>
+
+  <div class="divider" aria-hidden="true">♥ ✿ ♥ ✿ ♥</div>
+
+  <footer>
+    Last updated: November 6, 2026<br>
+    Classic internet made by modern internet ♥
+  </footer>
+
+</div>
+
+<script>
+  var calm = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // ---- Pixel art helper: each letter in a grid is one pixel, coloured by the lookup ----
+  function drawPixels(id, grid, colours) {
+    var svg = document.getElementById(id);
+    var ns = 'http://www.w3.org/2000/svg';
+    grid.forEach(function (row, y) {
+      row.split('').forEach(function (c, x) {
+        if (!colours[c]) return;
+        var r = document.createElementNS(ns, 'rect');
+        r.setAttribute('x', x);
+        r.setAttribute('y', y);
+        r.setAttribute('width', 1);
+        r.setAttribute('height', 1);
+        r.setAttribute('fill', colours[c]);
+        svg.appendChild(r);
+      });
+    });
+  }
+
+  // ---- Pixel teacup for the mood line ----
+  // # = cup outline, p = pink tea, s = steam
+  drawPixels('cup', [
+    '...s...s...',
+    '..s...s....',
+    '#########..',
+    '#ppppppp###',
+    '#ppppppp#.#',
+    '#ppppppp###',
+    '.#ppppp#...',
+    '..#####....'
+  ], { '#': '#4a1d3f', 'p': '#ff9ec4', 's': '#b48ad8' });
+
+  // ---- Pixel raven ----
+  // # = feathers, w = wing sheen, e = eye, c = blush, p = bow, k = bow knot, b = branch, f = blossom
+  (function () {
+    var grid = [
+      '...........pp.pp..',
+      '...........ppkpp..',
+      '............###...',
+      '...........#####..',
+      '...........##e####',
+      '..........####c##.',
+      '..........#####...',
+      '......#########...',
+      '....##wwww#####...',
+      '..##wwww######....',
+      '#####ww######.....',
+      '...##########.....',
+      '.....#######......',
+      '.......#..#.......',
+      '.......#..#.......',
+      '..bbbfbbbbbbfbbb..'
+    ];
+    var colours = {
+      '#': '#2b1a3a', 'w': '#8a6bbf', 'e': '#ffffff', 'c': '#ff9ec4',
+      'p': '#ff7eb6', 'k': '#d63384', 'b': '#8a5a3b', 'f': '#ffb3d9'
+    };
+    drawPixels('raven', grid, colours);
+  })();
+
+  // ---- Visit counter (counts visits from this browser only) ----
+  (function () {
+    var n = 1;
+    try {
+      n = (parseInt(localStorage.getItem('nestVisits') || '0', 10) || 0) + 1;
+      localStorage.setItem('nestVisits', n);
+    } catch (e) {}
+    var box = document.getElementById('counter');
+    String(n).padStart(6, '0').split('').forEach(function (d) {
+      var s = document.createElement('span');
+      s.textContent = d;
+      box.appendChild(s);
+    });
+  })();
+
+  // ---- Stop the marquee for people who prefer less motion ----
+  if (calm) {
+    var m = document.querySelector('marquee');
+    if (m && m.stop) m.stop();
+  }
+
+  // ---- Meditation board: an old-school airbrush whose speckles fade away on their own ----
+  var board = document.getElementById('board');
+  (function () {
+    var ctx = board.getContext('2d');
+    var FADE = 10000;          // ✏️ how long the spray takes to disappear, in milliseconds (10000 = 10 seconds)
+    var RADIUS = 10;           // ✏️ how far the outer speckles can reach, in pixels
+    var SOFTNESS = 0.4;        // ✏️ how tight the centre is: smaller = tighter core, bigger = more even spread
+    var DOT = 2;               // ✏️ size of each speckle, in pixels
+    var SPRAY_PER_SEC = 500;   // ✏️ speckles per second while you hold still (it builds up, like a spray can)
+    var TRAIL_DENSITY = 1.4;   // ✏️ speckles per pixel of movement: higher = denser line
+    var MAX_DOTS = 16000;      // safety limit so slower phones stay smooth
+    var LEVELS = 40;           // number of fade steps
+    var PAPER = [255, 250, 252];  // board colour
+    // ✏️ Speckle colours: mostly soft mauve, with a few pink and lilac sparkles mixed in
+    var COLOURS = [[176, 122, 160], [176, 122, 160], [176, 122, 160], [240, 140, 186], [178, 150, 222]];
+
+    var dots = [];             // each speckle: position, colour number, and when it was sprayed (oldest first)
+    var pen = null;            // where the pointer is while drawing
+    var running = false, lastFrame = 0, sprayDebt = 0;
+    var dpr = 1;
+
+    function mix(c, amount) {   // blend a colour toward the board colour
+      return 'rgb(' +
+        Math.round(PAPER[0] + (c[0] - PAPER[0]) * amount) + ',' +
+        Math.round(PAPER[1] + (c[1] - PAPER[1]) * amount) + ',' +
+        Math.round(PAPER[2] + (c[2] - PAPER[2]) * amount) + ')';
+    }
+    // Pre-mix every colour at every fade step once, so drawing stays quick
+    var shades = COLOURS.map(function (c) {
+      var list = [];
+      for (var l = 0; l <= LEVELS; l++) list.push(mix(c, l / LEVELS));
+      return list;
+    });
+    var paperColour = mix(PAPER, 1);
+    var hintColour = mix([214, 51, 132], 0.45);
+
+    // How much colour is left: eases out slowly at first, then drifts softly away
+    function inkAmount(age) {
+      var k = Math.min(1, Math.max(0, age / FADE));
+      return 0.5 + 0.5 * Math.cos(Math.PI * k);
+    }
+
+    function point(e) {
+      var r = board.getBoundingClientRect();
+      return { x: e.clientX - r.left - board.clientLeft, y: e.clientY - r.top - board.clientTop };
+    }
+
+    // Scatter speckles like a spray can: dense in the middle, thinning out toward the edges
+    function spray(x, y, count, now) {
+      for (var i = 0; i < count; i++) {
+        var r;
+        do {   // bell-curve distance from the centre, re-rolled if it lands past the outer edge
+          r = RADIUS * SOFTNESS * Math.sqrt(-2 * Math.log(1 - Math.random()));
+        } while (r > RADIUS);
+        var a = Math.random() * Math.PI * 2;
+        dots.push({
+          x: Math.round(x + Math.cos(a) * r),
+          y: Math.round(y + Math.sin(a) * r),
+          c: Math.floor(Math.random() * COLOURS.length),
+          t: now
+        });
+      }
+      if (dots.length > MAX_DOTS) dots.splice(0, dots.length - MAX_DOTS);
+    }
+
+    function render(now) {
+      var w = board.width / dpr, h = board.height / dpr;
+      ctx.fillStyle = paperColour;
+      ctx.fillRect(0, 0, w, h);
+
+      // Forget speckles that have fully faded
+      var gone = 0;
+      while (gone < dots.length && now - dots[gone].t >= FADE) gone++;
+      if (gone) dots.splice(0, gone);
+
+      if (!dots.length && !pen) {
+        ctx.fillStyle = hintColour;
+        ctx.font = 'italic 20px "Times New Roman", Times, serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('draw here ♥', w / 2, h / 2);
+        return false;
+      }
+
+      // Sort speckles by shade, then paint the faintest first so fresh ones sit on top
+      var buckets = [];
+      for (var i = 0; i < dots.length; i++) {
+        var d = dots[i];
+        var level = Math.round(inkAmount(now - d.t) * LEVELS);
+        if (!level) continue;
+        var row = buckets[level] || (buckets[level] = []);
+        (row[d.c] || (row[d.c] = [])).push(d);
+      }
+      for (var l = 1; l <= LEVELS; l++) {
+        if (!buckets[l]) continue;
+        for (var c = 0; c < COLOURS.length; c++) {
+          var group = buckets[l][c];
+          if (!group) continue;
+          ctx.fillStyle = shades[c][l];
+          for (var j = 0; j < group.length; j++) {
+            ctx.fillRect(group[j].x - DOT / 2, group[j].y - DOT / 2, DOT, DOT);
+          }
+        }
+      }
+      return true;
+    }
+
+    function frame(now) {
+      // Keep spraying while the pointer is held down, even if it isn't moving
+      if (pen) {
+        sprayDebt += SPRAY_PER_SEC * Math.min(50, now - lastFrame) / 1000;
+        var n = Math.floor(sprayDebt);
+        sprayDebt -= n;
+        if (n) spray(pen.x, pen.y, n, now);
+      }
+      lastFrame = now;
+      if (render(now)) requestAnimationFrame(frame);
+      else running = false;
+    }
+    function start() {
+      if (!running) {
+        running = true;
+        lastFrame = performance.now();
+        requestAnimationFrame(frame);
+      }
+    }
+
+    function resize() {
+      dpr = window.devicePixelRatio || 1;
+      board.width = Math.round(board.clientWidth * dpr);
+      board.height = Math.round(board.clientHeight * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      if (!running) render(performance.now());
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    board.addEventListener('pointerdown', function (e) {
+      if (e.pointerType === 'mouse' && e.button !== 0) return;
+      e.preventDefault();
+      if (board.setPointerCapture) board.setPointerCapture(e.pointerId);
+      pen = point(e);
+      spray(pen.x, pen.y, 12, performance.now());
+      start();
+    });
+    board.addEventListener('pointermove', function (e) {
+      if (!pen) return;
+      var now = performance.now();
+      var events = (e.getCoalescedEvents && e.getCoalescedEvents().length) ? e.getCoalescedEvents() : [e];
+      events.forEach(function (ev) {
+        var p = point(ev);
+        var dist = Math.hypot(p.x - pen.x, p.y - pen.y);
+        var n = Math.round(dist * TRAIL_DENSITY);
+        for (var k = 1; k <= n; k++) {   // spray along the path so quick strokes stay speckled, not gappy
+          spray(pen.x + (p.x - pen.x) * k / n, pen.y + (p.y - pen.y) * k / n, 1, now);
+        }
+        pen = p;
+      });
+    });
+    function lift() { pen = null; }
+    board.addEventListener('pointerup', lift);
+    board.addEventListener('pointercancel', lift);
+    board.addEventListener('lostpointercapture', lift);
+  })();
+
+  // ---- Hearts-and-sparkles trail ----
+  // With a mouse it follows the pointer everywhere.
+  // On phones and tablets it follows your finger while you draw on the board.
+  var trail = (function () {
+    if (calm) return null;
+
+    var COUNT = 12;
+    var colours = ['#ff5fa2', '#c78bff', '#ff9ec4', '#a66cff', '#ff7eb6', '#e0a3ff'];
+    var dots = [];
+    var targetX = -100, targetY = -100, offset = 14;
+    var visible = false, running = false, stillFrames = 0;
+
+    for (var i = 0; i < COUNT; i++) {
+      var el = document.createElement('span');
+      el.className = 'trail';
+      el.setAttribute('aria-hidden', 'true');
+      el.textContent = (i % 3 === 1) ? '✧' : '♥';
+      el.style.color = colours[i % colours.length];
+      el.style.fontSize = (22 - i) + 'px';
+      document.body.appendChild(el);
+      dots.push({ el: el, x: -100, y: -100 });
+    }
+
+    function animate() {
+      var x = targetX + offset, y = targetY + offset, moving = false;
+      dots.forEach(function (d) {
+        var dx = (x - d.x) * 0.4, dy = (y - d.y) * 0.4;
+        if (Math.abs(dx) + Math.abs(dy) > 0.1) moving = true;
+        d.x += dx;
+        d.y += dy;
+        d.el.style.transform = 'translate(' + d.x + 'px,' + d.y + 'px) translate(-50%,-50%)';
+        x = d.x;
+        y = d.y;
+      });
+      stillFrames = moving ? 0 : stillFrames + 1;
+      if (stillFrames < 30) requestAnimationFrame(animate);
+      else running = false;   // rest when nothing is moving, to save battery
+    }
+    function wake() {
+      stillFrames = 0;
+      if (!running) { running = true; requestAnimationFrame(animate); }
+    }
+
+    return {
+      moveTo: function (x, y, off) { targetX = x; targetY = y; offset = off; wake(); },
+      jumpTo: function (x, y, off) {
+        targetX = x; targetY = y; offset = off;
+        dots.forEach(function (d) { d.x = x + off; d.y = y + off; });
+        wake();
+      },
+      show: function (on) {
+        if (on === visible) return;
+        visible = on;
+        dots.forEach(function (d) { d.el.style.opacity = on ? 1 : 0; });
+      }
+    };
+  })();
+
+  if (trail) {
+    var touching = false;
+    document.addEventListener('pointermove', function (e) {
+      if (e.pointerType === 'mouse') {
+        trail.moveTo(e.clientX, e.clientY, 14);
+        trail.show(true);
+      } else if (touching) {
+        trail.moveTo(e.clientX, e.clientY, 0);
+        trail.show(true);
+      }
+    });
+    document.addEventListener('pointerdown', function (e) {
+      if (e.pointerType === 'mouse') return;
+      touching = true;
+      trail.jumpTo(e.clientX, e.clientY, 0);
+    });
+    function liftFinger(e) {
+      if (e.pointerType === 'mouse') return;
+      touching = false;
+      trail.show(false);
+    }
+    document.addEventListener('pointerup', liftFinger);
+    document.addEventListener('pointercancel', liftFinger);
+    document.addEventListener('mouseout', function (e) { if (!e.relatedTarget) trail.show(false); });
+  }
+
+  // ---- Tap bursts: tap anywhere on a phone or tablet (except the board) ----
+  (function () {
+    if (calm) return;
+    var symbols = ['♥', '✧', '✿', '♥', '✦'];
+    var colours = ['#ff5fa2', '#c78bff', '#ff9ec4', '#a66cff', '#ff7eb6'];
+    var tap = null;
+
+    function burst(x, y) {
+      var n = 10;
+      for (var i = 0; i < n; i++) {
+        var el = document.createElement('span');
+        if (!el.animate) return;
+        el.className = 'burst';
+        el.setAttribute('aria-hidden', 'true');
+        el.textContent = symbols[i % symbols.length];
+        el.style.color = colours[i % colours.length];
+        el.style.fontSize = (12 + Math.random() * 10) + 'px';
+        document.body.appendChild(el);
+        var angle = (i / n) * Math.PI * 2 + Math.random() * 0.5;
+        var dist = 35 + Math.random() * 35;
+        var endX = x + Math.cos(angle) * dist;
+        var endY = y + Math.sin(angle) * dist - 10;
+        var anim = el.animate([
+          { transform: 'translate(' + x + 'px,' + y + 'px) translate(-50%,-50%) scale(0.4)', opacity: 1 },
+          { transform: 'translate(' + endX + 'px,' + endY + 'px) translate(-50%,-50%) scale(1)', opacity: 0 }
+        ], { duration: 700 + Math.random() * 300, easing: 'cubic-bezier(.2,.7,.3,1)', fill: 'forwards' });
+        anim.onfinish = (function (node) { return function () { node.remove(); }; })(el);
+      }
+    }
+
+    document.addEventListener('pointerdown', function (e) {
+      var onEgg = e.target.closest && e.target.closest('.egg');
+      if (e.pointerType === 'mouse' || e.target === board || onEgg) { tap = null; return; }
+      tap = { x: e.clientX, y: e.clientY, t: Date.now() };
+    });
+    document.addEventListener('pointerup', function (e) {
+      if (!tap || e.pointerType === 'mouse') return;
+      var still = Math.abs(e.clientX - tap.x) + Math.abs(e.clientY - tap.y) < 12;
+      if (still && Date.now() - tap.t < 500) burst(e.clientX, e.clientY);
+      tap = null;
+    });
+    document.addEventListener('pointercancel', function () { tap = null; });
+  })();
+
+  // ---- Easter eggs ----
+  (function () {
+    // ✏️ Things the raven says when you tap it (one is picked at random)
+    var ravenLines = [
+      'that tickles!', 'Grock!', 'caw caw!', 'hehe!', 'ooh, shiny?!',
+      '*happy hop*', 'boop!', 'kraa!', 'got snacks?', "I'm not a crow!",
+      'nevermore? nah.'
+    ];
+    // ✏️ Things the teacup says
+    var cupLines = ['*sip*', 'ahh...', 'still warm <3', 'more tea?', 'perfectly cozy'];
+
+    var ravenBtn = document.getElementById('ravenBtn');
+    var ravenSvg = document.getElementById('raven');
+
+    // Show a speech bubble for a moment, never repeating the last line
+    function talker(bubbleId, lines) {
+      var el = document.getElementById(bubbleId);
+      var timer = null, last = -1;
+      return function (text) {
+        if (!text) {
+          var i;
+          do { i = Math.floor(Math.random() * lines.length); } while (lines.length > 1 && i === last);
+          last = i;
+          text = lines[i];
+        }
+        el.textContent = text;
+        el.classList.remove('show');
+        void el.offsetWidth;            // restart the pop animation
+        el.classList.add('show');
+        clearTimeout(timer);
+        timer = setTimeout(function () { el.classList.remove('show'); }, 1800);
+      };
+    }
+    var ravenSays = talker('ravenBubble', ravenLines);
+    var cupSays = talker('cupBubble', cupLines);
+
+    function hop() {
+      if (calm) return;
+      ravenSvg.classList.remove('hop');
+      void ravenSvg.getBoundingClientRect();
+      ravenSvg.classList.add('hop');
+    }
+    ravenSvg.addEventListener('animationend', function (e) {
+      if (e.animationName === 'hop') ravenSvg.classList.remove('hop');
+    });
+
+    // ✏️ What the raven squawks when you tap too fast
+    var tooFastLines = ['eek! TOO FAST!', 'my feathers!!', '@_@', 'ok ok OK!!'];
+
+    // Little pixel feathers (# = feather, w = shaft), in three colourways
+    var featherGrid = ['..#..', '.###.', '.#w#.', '##w##', '##w##', '.#w#.', '.###.', '..w..', '..w..'];
+    function featherImage(dark, light) {
+      var rects = '';
+      featherGrid.forEach(function (row, y) {
+        row.split('').forEach(function (c, x) {
+          if (c === '#' || c === 'w') {
+            rects += "<rect x='" + x + "' y='" + y + "' width='1' height='1' fill='" + (c === '#' ? dark : light) + "'/>";
+          }
+        });
+      });
+      var svgText = "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 5 9' shape-rendering='crispEdges'>" + rects + "</svg>";
+      return 'url("data:image/svg+xml,' + encodeURIComponent(svgText) + '")';
+    }
+    var featherLooks = [
+      featherImage('#2b1a3a', '#8a6bbf'),
+      featherImage('#8a6bbf', '#c9b3ea'),
+      featherImage('#2b1a3a', '#ff9ec4')
+    ];
+
+    // Surprise for rapid tapping: the raven gets flustered and its feathers go poof
+    function featherPoof() {
+      ravenSays(tooFastLines[Math.floor(Math.random() * tooFastLines.length)]);
+      if (calm) return;
+      var r = ravenSvg.getBoundingClientRect();
+      var cx = r.left + r.width * 0.55, cy = r.top + r.height * 0.45;
+      for (var i = 0; i < 14; i++) {
+        var el = document.createElement('span');
+        if (!el.animate) return;
+        el.className = 'burst feather';
+        el.setAttribute('aria-hidden', 'true');
+        el.style.backgroundImage = featherLooks[i % featherLooks.length];
+        document.body.appendChild(el);
+        var angle = Math.random() * Math.PI * 2;
+        var dist = 30 + Math.random() * 50;
+        var popX = cx + Math.cos(angle) * dist;
+        var popY = cy + Math.sin(angle) * dist * 0.7 - 20;
+        var sway = (Math.random() - 0.5) * 60;
+        var fall = 90 + Math.random() * 80;
+        var spin = Math.random() * 360 - 180;
+        var anim = el.animate([
+          { transform: 'translate(' + cx + 'px,' + cy + 'px) translate(-50%,-50%) scale(0.5)', opacity: 1, easing: 'ease-out' },
+          { transform: 'translate(' + popX + 'px,' + popY + 'px) translate(-50%,-50%) rotate(' + (spin / 3) + 'deg)', opacity: 1, offset: 0.2, easing: 'ease-in-out' },
+          { transform: 'translate(' + (popX + sway) + 'px,' + (popY + fall) + 'px) translate(-50%,-50%) rotate(' + spin + 'deg)', opacity: 0 }
+        ], { duration: 1800 + Math.random() * 900, fill: 'forwards' });
+        anim.onfinish = (function (node) { return function () { node.remove(); }; })(el);
+      }
+    }
+
+    // Secret: a shower of hearts and flowers falls down the screen
+    function heartRain() {
+      ravenSays('secret found! <3');
+      if (calm) return;
+      var symbols = ['♥', '✿', '✧', '♥', '✦'];
+      var colours = ['#ff5fa2', '#c78bff', '#ff9ec4', '#a66cff', '#ff7eb6'];
+      for (var i = 0; i < 40; i++) {
+        var el = document.createElement('span');
+        if (!el.animate) return;
+        el.className = 'burst';
+        el.setAttribute('aria-hidden', 'true');
+        el.textContent = symbols[i % symbols.length];
+        el.style.color = colours[i % colours.length];
+        el.style.fontSize = (14 + Math.random() * 14) + 'px';
+        document.body.appendChild(el);
+        var x = Math.random() * window.innerWidth;
+        var drift = (Math.random() - 0.5) * 80;
+        var spin = Math.random() * 360 - 180;
+        var anim = el.animate([
+          { transform: 'translate(' + x + 'px,-40px) rotate(0deg)' },
+          { transform: 'translate(' + (x + drift) + 'px,' + (window.innerHeight + 40) + 'px) rotate(' + spin + 'deg)' }
+        ], { duration: 2500 + Math.random() * 2000, delay: Math.random() * 1200, fill: 'both' });
+        anim.onfinish = (function (node) { return function () { node.remove(); }; })(el);
+      }
+    }
+
+    // Every tap: the raven hops and says something.
+    // Tapping fast (5 taps within 1.2 seconds) also makes its feathers go poof.
+    // 7 taps in a row (each within 2.5 seconds of the last) brings the heart shower.
+    var taps = 0, tapTimer = null, recent = [], poofReadyAt = 0;
+    ravenBtn.addEventListener('click', function () {
+      var now = performance.now();
+      hop();
+
+      recent.push(now);
+      recent = recent.filter(function (t) { return now - t < 1200; });   // ✏️ 1200 = the 1.2-second window
+      var fast = recent.length >= 5 && now >= poofReadyAt;              // ✏️ 5 = taps needed in that window
+      if (fast) {
+        recent = [];
+        poofReadyAt = now + 3000;   // a 3-second rest before the next poof
+        featherPoof();              // also shows a "too fast!" line
+      }
+      taps++;
+      clearTimeout(tapTimer);
+      tapTimer = setTimeout(function () { taps = 0; }, 2500);
+      if (taps >= 7) { taps = 0; heartRain(); }
+      else if (!fast) ravenSays();
+    });
+
+    // Tap the teacup for a sip
+    document.getElementById('cupBtn').addEventListener('click', function () { cupSays(); });
+
+    // The classic secret code also works on a keyboard: ↑ ↑ ↓ ↓ ← → ← → B A
+    var code = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+    var pos = 0;
+    document.addEventListener('keydown', function (e) {
+      var key = e.key.length === 1 ? e.key.toLowerCase() : e.key;
+      pos = (key === code[pos]) ? pos + 1 : (key === code[0] ? 1 : 0);
+      if (pos === code.length) { pos = 0; heartRain(); }
+    });
+  })();
+</script>
+</body>
+</html>
